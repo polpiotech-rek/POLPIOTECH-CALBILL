@@ -19,9 +19,11 @@ try:
     print()
     listCustomer = []
     listMoney = []
+    amountShopping = []
     for i in range(quantityCustomer):
         listCustomer.append(str(input('Nazwa zamawiającego: ')))
         listMoney.append(float(input('Kwota na zakupy [PLN]: ')))
+        amountShopping.append(float(input('Kwota z paragonie [PLN]: ')))
         print()
 
 except(ValueError):
@@ -70,12 +72,47 @@ if answerSum == 't':
     else:
         cprint('[ MNIEJ ] - ilość dokumentów fiskalnych jest mniejsza od ilości zamówień! --> PRAWDOPODOBNIE O CZYMŚ ZAPOMNIAŁEŚ :( ', 'white', 'on_red')
     
+    print()
+    #print()
+    #cprint('ROZLICZENIE:', 'white', 'on_red')
+    #print()
+    for x in range(len(listCustomer)):
+        sumShopping = amountShopping[x] / listMoney[x]
+        result = listMoney[x] - amountShopping[x]
+        print(f'ZAMAWIAJĄCY: {listCustomer[x]}', end =" ")
+        print(f'KWOTA NA ZAKUPY: {listMoney[x]} zł -', end =" ")
+        print(f'KWOTA Z PARAGONU: {amountShopping[x]} zł = ', end ="")
+        print(f'KWOTA DO ZWROTU: {round(result,2)} zł \n', end ="")
+        print(colored(f' WYDANO [%]: {sumShopping:.2%} ', 'white', 'on_green'))
+        print()
+    cprint('ROZLICZONO WSZYSTKIE ZAMÓWIENIA...', 'white', 'on_red')
+    print()
+    print()
+    cprint('Czy chcesz zakończyć pracę programu? (T/N)', 'white', 'on_green')
+    answerClose = str(input('WYBÓR: '))
+    if answerClose == 't':
+        system('cls')
+        cprint('TRWA ZAMYKANIE PROGRAMU...', 'white', 'on_red')
+        for i in range(101):
+            print("\rLOADING {}%".format(i), end='')
+            sleep(0.01)
+        system('cls')
+        exit
+    else:
+        system('cls')
+        cprint('TRWA PONOWNE URUCHOMIENIE PROGRAMU...', 'white', 'on_red')
+        for i in range(101):
+            print("\rLOADING {}%".format(i), end='')
+            sleep(0.01)
+        system('cls')
+        system('python calbill.py')
+
 else:
     cprint('Czy chcesz uruchomić ponownie program? (T/N)', 'white', 'on_green')
     answerRep = str(input('WYBÓR: '))
     if answerRep == 't':
         system('cls')
-        cprint('TRWA PONOWNE URUCHOMIENIE PROGRAMU...', 'white', 'on_green')
+        cprint('TRWA PONOWNE URUCHOMIENIE PROGRAMU...', 'white', 'on_red')
         for i in range(101):
             print("\rLOADING {}%".format(i), end='')
             sleep(0.01)
